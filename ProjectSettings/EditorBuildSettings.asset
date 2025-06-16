@@ -8,6 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Title Screen.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Car Track Scene.unity
+    guid: 928c8efc5b2109f4780945f4d6d1f080
+  - enabled: 1
+    path: Assets/Scenes/Boat Track Scene.unity
+    guid: 94f07ed5041224242a4d4e8453f0c9ea
+  - enabled: 1
+    path: Assets/Scenes/Plane Track Scene.unity
+    guid: c95c35ede49711449a35c726b9be24e3
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
