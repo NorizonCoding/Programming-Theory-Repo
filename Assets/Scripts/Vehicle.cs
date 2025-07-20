@@ -1,25 +1,54 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public abstract class Vehicle : MonoBehaviour
+namespace Vehicles
 {
-    protected float m_Speed;
-
-    protected int m_Year;
-
-    public int Year {  get { return m_Year; } set { if (value >= 0) m_Year = value; } }
-    public float Speed { get { return m_Speed; } set { if (value >= 0) m_Speed = value; } }
-
-    protected bool engineOn = false;
-
-    protected Rigidbody rb;
-
-    public virtual void TurnOn() {  engineOn = true; }
-    public virtual void TurnOff() { engineOn = false; }
-
-    private void Start()
+    [RequireComponent (typeof(Rigidbody))]
+    public abstract class Vehicle : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
+        [SerializeField] protected float curSpeed;
+
+        public float Speed { get { return curSpeed; } }
+
+        [SerializeField] protected bool engineEnabled;
+
+        protected Vector3 prevPosition;
+
+        [SerializeField] protected VehicleData vehicleData;
+
+        protected new Rigidbody rigidbody;
+
+        // Start is called once before the first frame Update
+        protected virtual void Awake()
+        {
+            rigidbody = GetComponent<Rigidbody>();
+            rigidbody.mass = vehicleData.mass;
+            prevPosition = transform.position;
+        }
+
+        // Called at the start of every fixed update
+        private void CalculateSpeed()
+        {
+            curSpeed = (transform.position - prevPosition).magnitude/Time.fixedDeltaTime;
+            prevPosition = transform.position;
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            CalculateSpeed();
+        }
+
+        virtual protected void ToggleEngine()
+        {
+            engineEnabled = !engineEnabled;
+        }
     }
 
-    public abstract void Move();
+    public interface IInput // Interface with input functions
+    {
+        /// <summary>
+        /// Does all the math to move the player based on the player's input.
+        /// </summary>
+        void Move();
+    }
 }
