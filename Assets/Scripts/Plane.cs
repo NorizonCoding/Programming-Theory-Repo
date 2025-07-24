@@ -3,7 +3,7 @@ using Vehicles;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 
-public class Plane : Vehicle, IInput
+public class Plane : Vehicle
 {
     [SerializeField] Transform cameraTarget;
 
@@ -36,7 +36,7 @@ public class Plane : Vehicle, IInput
         //cameraTransform.LookAt(cameraTarget);
     }
 
-    public void Move()
+    protected override void Move()
     {
         moveAmt = moveAction.ReadValue<Vector2>();
         thrustAmt = thrustAction.ReadValue<float>();

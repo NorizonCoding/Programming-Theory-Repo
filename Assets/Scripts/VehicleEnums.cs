@@ -17,6 +17,6 @@ namespace Vehicles
 
     public enum VehicleType
     {
-        Land, Water, Air
+        Land, Water, Air, Heli
     }
 }

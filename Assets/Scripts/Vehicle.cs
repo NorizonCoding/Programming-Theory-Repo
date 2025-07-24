@@ -6,11 +6,11 @@ namespace Vehicles
     [RequireComponent (typeof(Rigidbody))]
     public abstract class Vehicle : MonoBehaviour
     {
-        [SerializeField] protected float curSpeed;
-
+        protected float curSpeed;
         public float Speed { get { return curSpeed; } }
 
         [SerializeField] protected bool engineEnabled;
+        public bool EngineStatus { get { return engineEnabled; } }
 
         protected Vector3 prevPosition;
 
@@ -18,12 +18,17 @@ namespace Vehicles
 
         protected new Rigidbody rigidbody;
 
+        protected InputSystem_Actions inputActions;
+
         // Start is called once before the first frame Update
         protected virtual void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
-            rigidbody.mass = vehicleData.mass;
+            //rigidbody.mass = vehicleData.mass;
+
             prevPosition = transform.position;
+
+            inputActions = new InputSystem_Actions();
         }
 
         // Called at the start of every fixed update
@@ -42,13 +47,7 @@ namespace Vehicles
         {
             engineEnabled = !engineEnabled;
         }
-    }
 
-    public interface IInput // Interface with input functions
-    {
-        /// <summary>
-        /// Does all the math to move the player based on the player's input.
-        /// </summary>
-        void Move();
+        protected abstract void Move();
     }
 }
