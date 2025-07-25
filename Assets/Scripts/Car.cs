@@ -14,10 +14,15 @@ public class Car : Vehicle
     private WheelControl[] wheels;
     private Rigidbody rigidBody;
 
+    private InputSystem_Actions inputActions;
+
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+
+        inputActions = new InputSystem_Actions();
+        inputActions.Enable();
 
         // Adjust center of mass to improve stability and prevent rolling
         Vector3 centerOfMass = rigidBody.centerOfMass;
@@ -38,7 +43,7 @@ public class Car : Vehicle
 
     private void Update()
     {
-        if (inputActions.Car.EngineToggle.WasPressedThisFrame()) ToggleEngine(); 
+        if (inputActions.Car.EngineToggle.WasPressedThisFrame()) ToggleEngine();
     }
 
     protected override void Move()
@@ -86,5 +91,15 @@ public class Car : Vehicle
                 wheel.WheelCollider.brakeTorque = Mathf.Abs(vInput) * brakeTorque;
             }
         }
+    }
+
+    public override void EnableInput()
+    {
+        inputActions.Car.Enable();
+    }
+
+    public override void DisableInput()
+    {
+        inputActions.Car.Disable();
     }
 }
