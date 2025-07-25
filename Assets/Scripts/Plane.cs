@@ -1,77 +1,50 @@
+using JetBrains.Annotations;
 using UnityEngine;
-using Vehicles;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
+using Vehicles;
 
 public class Plane : Vehicle
 {
-    [SerializeField] Transform cameraTarget;
-
-    public InputActionAsset InputActions;
-
-    private InputAction moveAction;
-    private InputAction engineAction;
-    private InputAction thrustAction;
+    [SerializeField] private GameObject[] propellers;
 
     private Vector2 moveAmt;
     private float thrustAmt;
 
-    private void OnEnable()
-    {
-        InputActions.FindActionMap("Plane").Enable();
-    }
-
-    private void OnDisable()
-    {
-        InputActions.FindActionMap("Plane").Disable();
-    }
-
-    public void LookAround()
-    {
-        //lookAmt = lookAction.ReadValue<Vector2>();
-        //Transform cameraTransform = gameObject.GetComponentInChildren<Camera>().transform;
-
-        
-
-        //cameraTransform.LookAt(cameraTarget);
-    }
+    private InputSystem_Actions inputActions;
 
     protected override void Move()
     {
-        moveAmt = moveAction.ReadValue<Vector2>();
-        thrustAmt = thrustAction.ReadValue<float>();
+        moveAmt = inputActions.Plane.Move.ReadValue<Vector2>();
+        thrustAmt = inputActions.Plane.Thrust.ReadValue<float>();
 
         Vector3 forwardMovement = Vector3.forward * thrustAmt;
 
-        const float ROTATION_SPEED = 10f;
-
         rigidbody.AddRelativeForce(forwardMovement * vehicleData.enginePower); // Add forward thrust
-        rigidbody.AddRelativeTorque(moveAmt.x * ROTATION_SPEED * vehicleData.enginePower * Vector3.up);
+        rigidbody.AddRelativeTorque(moveAmt.x * vehicleData.enginePower * Vector3.up);
 
         float liftThreshold = 180f;
 
         if (curSpeed > liftThreshold)
         {
             rigidbody.useGravity = false;
-            rigidbody.AddRelativeTorque(-moveAmt.x * ROTATION_SPEED * vehicleData.enginePower * Vector3.forward);
-            rigidbody.AddRelativeTorque(moveAmt.y * ROTATION_SPEED * vehicleData.enginePower * Vector3.right);
+            rigidbody.AddRelativeTorque(-moveAmt.x * vehicleData.enginePower * Vector3.forward);
+            rigidbody.AddRelativeTorque(moveAmt.y * vehicleData.enginePower * Vector3.right);
         }
         else rigidbody.useGravity = true;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected override void Awake()
+    private void SpinPropellers()
     {
-        base.Awake();
-
-        moveAction = InputSystem.actions.FindAction("Plane/Move");
-        engineAction = InputSystem.actions.FindAction("Engine Toggle");
-        thrustAction = InputSystem.actions.FindAction("Plane/Thrust");
+        float ROTATION_SPEED = 45f;
+        foreach (GameObject propeller in propellers)
+        {
+            propeller.transform.Rotate(Vector3.forward, Speed * ROTATION_SPEED);
+        }
     }
 
     void Update()
     {
-        if (engineAction.WasPressedThisFrame())
+        if (inputActions.Plane.EngineToggle.WasPressedThisFrame())
         {
             ToggleEngine();
         }
@@ -81,7 +54,25 @@ public class Plane : Vehicle
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        LookAround();
-        if (engineEnabled) Move();
+        if (engineEnabled) 
+        { 
+            Move();
+            SpinPropellers();
+        }
+    }
+
+    public override void DisableInput()
+    {
+        inputActions.Plane.Disable();
+    }
+
+    public override void EnableInput()
+    {
+        inputActions.Plane.Enable();
+    }
+
+    private void Start()
+    {
+        inputActions = new InputSystem_Actions();
     }
 }

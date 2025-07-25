@@ -13,15 +13,12 @@ MonoBehaviour:
   m_Name: Car Data
   m_EditorClassIdentifier: 
   vehicleType: 0
-  maxSpeed: 0
-  enginePower: 0
+  maxSpeed: 200
+  enginePower: 2000
   yearOfManufacture: 0
   fuelConsumptionRate: 0
   fuelType: 0
   fuelCapacity: 0
-  size: 0
-  mass: 0
-  idleSound: {fileID: 0}
-  runningSound: {fileID: 0}
+  mass: 1500
   transmission: 0
   wheelNumber: 4

@@ -12,21 +12,17 @@ public class HUDManager : MonoBehaviour
     [SerializeField] private GameObject boatCamera;
     [SerializeField] private GameObject heliCamera;
 
-    private Vehicle vehicle;
+    [SerializeField] private Vehicle car;
+    [SerializeField] private Vehicle plane;
+    [SerializeField] private Vehicle heli;
+    [SerializeField] private Vehicle boat;
 
-    public InputSystem_Actions inputActions;
+    private Vehicle vehicle;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         vehicle = carCamera.GetComponentInParent<Vehicle>();
-
-        inputActions = new InputSystem_Actions();
-
-        inputActions.Plane.Disable();
-        inputActions.Car.Enable();
-        inputActions.Boat.Disable();
-        inputActions.Heli.Disable();
     }
 
     // Update is called once per frame
@@ -37,61 +33,57 @@ public class HUDManager : MonoBehaviour
 
     public void CarButton()
     {
-        inputActions.Car.Enable();
-        inputActions.Boat.Disable();
-        inputActions.Plane.Disable();
-        inputActions.Heli.Disable();
-
         carCamera.SetActive(true);
         boatCamera.SetActive(false);
         planeCamera.SetActive(false);
         heliCamera.SetActive(false);
 
-        vehicle = carCamera.GetComponentInParent<Vehicle>();
+        vehicle = car;
+        vehicle.EnableInput();
+        boat.DisableInput();
+        plane.DisableInput();
+        heli.DisableInput();
     }
 
     public void BoatButton()
     {
-        inputActions.Car.Disable();
-        inputActions.Boat.Enable();
-        inputActions.Plane.Disable();
-        inputActions.Heli.Disable();
-
         carCamera.SetActive(false);
         boatCamera.SetActive(true);
         planeCamera.SetActive(false);
         heliCamera.SetActive(false);
 
-        vehicle = boatCamera.GetComponentInParent<Vehicle>();
+        vehicle = boat;
+        vehicle.EnableInput();
+        plane.DisableInput();
+        heli.EnableInput();
+        car.DisableInput();
     }
 
     public void PlaneButton()
     {
-        inputActions.Car.Disable();
-        inputActions.Boat.Disable();
-        inputActions.Plane.Enable();
-        inputActions.Heli.Disable();
-
         carCamera.SetActive(false);
         boatCamera.SetActive(false);
         planeCamera.SetActive(true);
         heliCamera.SetActive(false);
 
-        vehicle = planeCamera.GetComponentInParent<Vehicle>();
+        vehicle = plane;
+        vehicle.EnableInput();
+        heli.DisableInput();
+        boat.DisableInput();
+        car.DisableInput();
     }
 
     public void HeliButton()
     {
-        inputActions.Car.Disable();
-        inputActions.Boat.Disable();
-        inputActions.Plane.Disable();
-        inputActions.Heli.Enable();
-
         carCamera.SetActive(false);
         boatCamera.SetActive(false);
         planeCamera.SetActive(false);
         heliCamera.SetActive(true);
 
-        vehicle = heliCamera.GetComponentInParent<Vehicle>();
+        vehicle = heli;
+        vehicle.EnableInput();
+        plane.DisableInput();
+        boat.DisableInput();
+        car.DisableInput();
     }
 }

@@ -18,17 +18,14 @@ namespace Vehicles
 
         protected new Rigidbody rigidbody;
 
-        protected InputSystem_Actions inputActions;
-
         // Start is called once before the first frame Update
         protected virtual void Awake()
         {
             rigidbody = GetComponent<Rigidbody>();
-            //rigidbody.mass = vehicleData.mass;
+            rigidbody.mass = vehicleData.mass;
+            rigidbody.maxLinearVelocity = vehicleData.maxSpeed;
 
             prevPosition = transform.position;
-
-            inputActions = new InputSystem_Actions();
         }
 
         // Called at the start of every fixed update
@@ -49,5 +46,8 @@ namespace Vehicles
         }
 
         protected abstract void Move();
+
+        public abstract void EnableInput();
+        public abstract void DisableInput();
     }
 }
