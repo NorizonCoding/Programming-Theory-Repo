@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vehicles;
@@ -6,58 +5,89 @@ using Vehicles;
 public class Plane : Vehicle
 {
     [SerializeField] private GameObject[] propellers;
+    [SerializeField] private GameObject[] wheels;
+
+    [SerializeField] private float thrust = 0;
+
+    [SerializeField] private float trueThrust = 0;
 
     private Vector2 moveAmt;
     private float thrustAmt;
 
+    private bool liftOff;
+
     private InputSystem_Actions inputActions;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        inputActions = new InputSystem_Actions();
+    }
+
+    private void ChangeThrust()
+    {
+        if (engineEnabled && thrust < vehicleData.enginePower)
+        {
+            trueThrust += (vehicleData.thrustIncreaseRate * Time.fixedDeltaTime * thrustAmt);
+            trueThrust = Mathf.Clamp(trueThrust, 0, vehicleData.enginePower);
+            thrust = Mathf.InverseLerp(0, vehicleData.enginePower, trueThrust);
+        }
+
+        if (!engineEnabled && thrust > 0)
+        {
+            trueThrust -= (vehicleData.thrustIncreaseRate * Time.fixedDeltaTime * 4);
+            trueThrust = Mathf.Clamp(thrust, 0, vehicleData.enginePower);
+            thrust = Mathf.InverseLerp(0, vehicleData.enginePower, trueThrust);
+        }
+    }
 
     protected override void Move()
     {
+        float liftThreshold = 70f;
+
+        // Getting input values
         moveAmt = inputActions.Plane.Move.ReadValue<Vector2>();
         thrustAmt = inputActions.Plane.Thrust.ReadValue<float>();
 
-        Vector3 forwardMovement = Vector3.forward * thrustAmt;
+        // Calculating forward speed
+        float speed = vehicleData.maxSpeed * thrust;
 
-        rigidbody.AddRelativeForce(forwardMovement * vehicleData.enginePower); // Add forward thrust
-        rigidbody.AddRelativeTorque(moveAmt.x * vehicleData.enginePower * Vector3.up);
-
-        float liftThreshold = 180f;
+        transform.Translate(speed * Time.fixedDeltaTime * Vector3.forward);
 
         if (curSpeed > liftThreshold)
         {
+            liftOff = true;
             rigidbody.useGravity = false;
-            rigidbody.AddRelativeTorque(-moveAmt.x * vehicleData.enginePower * Vector3.forward);
-            rigidbody.AddRelativeTorque(moveAmt.y * vehicleData.enginePower * Vector3.right);
+            transform.Rotate(Vector3.right, 30f * Time.fixedDeltaTime * moveAmt.y);
+
+            transform.Rotate(Vector3.forward, 10f * Time.fixedDeltaTime * -moveAmt.x);
         }
-        else rigidbody.useGravity = true;
+        else
+        {
+            liftOff = false;
+            rigidbody.useGravity = true;
+            transform.Rotate(Vector3.up, 2.5f * Time.fixedDeltaTime * moveAmt.x);
+        }
+
+
+    }
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        ChangeThrust();
+        if (engineEnabled)
+        {
+            Move();
+            SpinPropellers();
+        }
     }
 
     private void SpinPropellers()
     {
-        float ROTATION_SPEED = 45f;
+        float ROTATION_SPEED = 720f;
         foreach (GameObject propeller in propellers)
         {
-            propeller.transform.Rotate(Vector3.forward, Speed * ROTATION_SPEED);
-        }
-    }
-
-    void Update()
-    {
-        if (inputActions.Plane.EngineToggle.WasPressedThisFrame())
-        {
-            ToggleEngine();
-        }
-    }
-
-    // Update is called once per frame
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-        if (engineEnabled) 
-        { 
-            Move();
-            SpinPropellers();
+            propeller.transform.Rotate(Vector3.forward, thrust * ROTATION_SPEED * Time.fixedDeltaTime);
         }
     }
 
@@ -71,8 +101,24 @@ public class Plane : Vehicle
         inputActions.Plane.Enable();
     }
 
-    private void Start()
+    void Update()
     {
-        inputActions = new InputSystem_Actions();
+        if (inputActions.Plane.EngineToggle.WasPressedThisFrame())
+        {
+            ToggleEngine();
+        }
+
+        if (inputActions.Plane.GearToggle.WasPressedThisFrame() && liftOff)
+        {
+            ToggleGear();
+        }
+    }
+
+    void ToggleGear()
+    {
+        foreach (GameObject wheel in wheels)
+        {
+            wheel.SetActive(!wheel.activeSelf);
+        }
     }
 }

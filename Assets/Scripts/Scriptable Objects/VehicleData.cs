@@ -8,6 +8,7 @@ namespace Vehicles
         public VehicleType vehicleType;
         public float maxSpeed; // Measured in meters/s
         public float enginePower; //Measured in Neutons
+        public float thrustIncreaseRate;
         public int yearOfManufacture;
         public float fuelConsumptionRate; // Measured in Litres/Km
         public Fuel fuelType;
