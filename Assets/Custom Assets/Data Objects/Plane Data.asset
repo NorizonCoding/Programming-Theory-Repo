@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Plane Data
   m_EditorClassIdentifier: 
   vehicleType: 2
-  maxSpeed: 320
-  enginePower: 1600000
+  maxSpeed: 160
+  enginePower: 800000
   yearOfManufacture: 2010
   fuelConsumptionRate: 1
   fuelType: 2
