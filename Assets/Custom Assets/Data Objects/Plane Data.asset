@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vehicleType: 2
   maxSpeed: 160
-  enginePower: 800000
+  enginePower: 1400000
+  thrustIncreaseRate: 140000
   yearOfManufacture: 2010
   fuelConsumptionRate: 1
   fuelType: 2
