@@ -3,12 +3,16 @@ using Vehicles;
 
 public class Plane : Vehicle
 {
+    [SerializeField] private float rollSpeed;
+    [SerializeField] private float pitchSpeed;
+    [SerializeField] private float yawSpeed;
+
     [SerializeField] private GameObject[] propellers;
     [SerializeField] private GameObject[] wheels;
 
-    [SerializeField] private float thrust = 0;
+    private float thrust = 0;
 
-    [SerializeField] private float trueThrust = 0;
+    private float trueThrust = 0;
 
     private Vector2 moveAmt;
     private float thrustAmt;
@@ -57,15 +61,15 @@ public class Plane : Vehicle
         {
             liftOff = true;
             rigidbody.useGravity = false;
-            transform.Rotate(Vector3.right, 30f * Time.fixedDeltaTime * moveAmt.y);
+            transform.Rotate(Vector3.right, pitchSpeed * Time.fixedDeltaTime * moveAmt.y);
 
-            transform.Rotate(Vector3.forward, 10f * Time.fixedDeltaTime * -moveAmt.x);
+            transform.Rotate(Vector3.forward, rollSpeed * Time.fixedDeltaTime * -moveAmt.x);
         }
         else
         {
             liftOff = false;
             rigidbody.useGravity = true;
-            transform.Rotate(Vector3.up, 2.5f * Time.fixedDeltaTime * moveAmt.x);
+            transform.Rotate(Vector3.up, yawSpeed * Time.fixedDeltaTime * moveAmt.x);
         }
 
 
