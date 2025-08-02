@@ -14,6 +14,10 @@ namespace Vehicles
 
         protected Vector3 prevPosition;
 
+        protected Vector3 spawnPosition;
+
+        protected Quaternion spawnRotation;
+
         [SerializeField] protected VehicleData vehicleData;
 
         protected new Rigidbody rigidbody;
@@ -23,8 +27,11 @@ namespace Vehicles
         // Start is called once before the first frame Update
         protected virtual void Awake()
         {
+            spawnPosition = transform.position;
+            spawnRotation = transform.rotation;
+
             rigidbody = GetComponent<Rigidbody>();
-            //rigidbody.mass = vehicleData.mass;
+            rigidbody.mass = vehicleData.mass;
 
             prevPosition = transform.position;
 
@@ -49,5 +56,16 @@ namespace Vehicles
         }
 
         protected abstract void Move();
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Killzone"))
+            {
+                rigidbody.angularVelocity = Vector3.zero;
+                rigidbody.linearVelocity = Vector3.zero;
+                transform.position = spawnPosition;
+                transform.rotation = spawnRotation;
+            }
+        }
     }
 }
