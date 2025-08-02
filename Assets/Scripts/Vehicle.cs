@@ -15,6 +15,7 @@ namespace Vehicles
         protected Vector3 prevPosition;
 
         protected Vector3 spawnPosition;
+
         protected Quaternion spawnRotation;
 
         [SerializeField] protected VehicleData vehicleData;
@@ -29,7 +30,9 @@ namespace Vehicles
 
             rigidbody = GetComponent<Rigidbody>();
             rigidbody.mass = vehicleData.mass;
+
             rigidbody.maxLinearVelocity = vehicleData.maxSpeed;
+
 
             prevPosition = transform.position;
         }
@@ -60,10 +63,11 @@ namespace Vehicles
         {
             if (other.gameObject.CompareTag("Killzone"))
             {
+                rigidbody.angularVelocity = Vector3.zero;
+                rigidbody.linearVelocity = Vector3.zero;
                 transform.position = spawnPosition;
                 transform.rotation = spawnRotation;
-                rigidbody.linearVelocity = Vector3.zero;
-                rigidbody.angularVelocity = Vector3.zero;
+
             }
         }
     }
