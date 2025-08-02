@@ -761,7 +761,7 @@ GameObject:
   - component: {fileID: 1708961508307778529}
   m_Layer: 0
   m_Name: Player Car
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -774,7 +774,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8336662585613044822}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -182.74, y: 13.937694, z: -272.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -906,6 +906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d1ef41f0e391d489e3de50ecfeddd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  engineEnabled: 0
+  vehicleData: {fileID: 11400000, guid: 919cf0d4a8bfeb942b81a1ef80b90af8, type: 2}
   motorTorque: 2000
   brakeTorque: 2000
   maxSpeed: 180

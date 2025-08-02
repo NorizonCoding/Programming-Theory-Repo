@@ -22,8 +22,6 @@ namespace Vehicles
 
         protected new Rigidbody rigidbody;
 
-        protected InputSystem_Actions inputActions;
-
         // Start is called once before the first frame Update
         protected virtual void Awake()
         {
@@ -33,9 +31,10 @@ namespace Vehicles
             rigidbody = GetComponent<Rigidbody>();
             rigidbody.mass = vehicleData.mass;
 
-            prevPosition = transform.position;
+            rigidbody.maxLinearVelocity = vehicleData.maxSpeed;
 
-            inputActions = new InputSystem_Actions();
+
+            prevPosition = transform.position;
         }
 
         // Called at the start of every fixed update
@@ -57,6 +56,9 @@ namespace Vehicles
 
         protected abstract void Move();
 
+        public abstract void EnableInput();
+        public abstract void DisableInput();
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Killzone"))
@@ -65,6 +67,7 @@ namespace Vehicles
                 rigidbody.linearVelocity = Vector3.zero;
                 transform.position = spawnPosition;
                 transform.rotation = spawnRotation;
+
             }
         }
     }
