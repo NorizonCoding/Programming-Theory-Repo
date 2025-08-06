@@ -533,6 +533,34 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 660786209750310730, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+      propertyPath: yawSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 660786209750310730, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+      propertyPath: rollSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 660786209750310730, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+      propertyPath: pitchSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 660786209750310730, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+      propertyPath: wheels.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 660786209750310730, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+      propertyPath: 'wheels.Array.data[0]'
+      value: 
+      objectReference: {fileID: 442701671}
+    - target: {fileID: 660786209750310730, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+      propertyPath: 'wheels.Array.data[1]'
+      value: 
+      objectReference: {fileID: 442701670}
+    - target: {fileID: 660786209750310730, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+      propertyPath: 'wheels.Array.data[2]'
+      value: 
+      objectReference: {fileID: 442701669}
     - target: {fileID: 1703512245631900006, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5042.2
@@ -622,6 +650,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+--- !u!1 &442701669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3594319564946676765, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+  m_PrefabInstance: {fileID: 442701668}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &442701670 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3337127095151100453, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+  m_PrefabInstance: {fileID: 442701668}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &442701671 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 573615909202935644, guid: b8b67e1efdaae2b4c839f4922066f6c2, type: 3}
+  m_PrefabInstance: {fileID: 442701668}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &515452324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1032,6 +1075,10 @@ MonoBehaviour:
   planeCamera: {fileID: 1270304304}
   boatCamera: {fileID: 2118841093}
   heliCamera: {fileID: 138212250}
+  car: {fileID: 0}
+  plane: {fileID: 0}
+  heli: {fileID: 0}
+  boat: {fileID: 0}
 --- !u!1 &732512716
 GameObject:
   m_ObjectHideFlags: 0
@@ -2749,7 +2796,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3101285577884570940, guid: d7f5e79cf2134d94f8657bd75d4fbee5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1101.46
+      value: 2380
       objectReference: {fileID: 0}
     - target: {fileID: 3101285577884570940, guid: d7f5e79cf2134d94f8657bd75d4fbee5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2757,7 +2804,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3101285577884570940, guid: d7f5e79cf2134d94f8657bd75d4fbee5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -18798.234
+      value: -13613
       objectReference: {fileID: 0}
     - target: {fileID: 3101285577884570940, guid: d7f5e79cf2134d94f8657bd75d4fbee5, type: 3}
       propertyPath: m_LocalRotation.w

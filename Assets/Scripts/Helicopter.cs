@@ -13,7 +13,10 @@ public class Helicopter : Vehicle
     // Update is called once per frame
     void Update()
     {
-        
+        if (inputActions.Heli.EngineToggle.WasPressedThisFrame())
+        {
+            ToggleEngine();
+        }
     }
 
     protected override void Move()

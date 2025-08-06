@@ -3,6 +3,8 @@ using Vehicles;
 
 public class Boat : Vehicle
 {
+    bool onWater = false;
+
     private InputSystem_Actions inputActions;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -11,9 +13,38 @@ public class Boat : Vehicle
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void FixedUpdate()
     {
-        
+        base.FixedUpdate();
+
+        if (onWater && engineEnabled)
+        {
+            Move();
+        }
+    }
+
+    private void Update()
+    {
+        if (inputActions.Boat.EngineToggle.WasPressedThisFrame())
+        {
+            ToggleEngine();
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            onWater = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Water"))
+        {
+            onWater = false;
+        }
     }
 
     protected override void Move()
