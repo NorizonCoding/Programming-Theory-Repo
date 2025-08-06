@@ -56,9 +56,6 @@ namespace Vehicles
 
         protected abstract void Move();
 
-        public abstract void EnableInput();
-        public abstract void DisableInput();
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Killzone"))

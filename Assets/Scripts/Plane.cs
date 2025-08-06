@@ -19,12 +19,9 @@ public class Plane : Vehicle
 
     private bool liftOff;
 
-    private InputSystem_Actions inputActions;
-
     protected override void Awake()
     {
         base.Awake();
-        inputActions = new InputSystem_Actions();
     }
 
     private void ChangeThrust()
@@ -49,8 +46,8 @@ public class Plane : Vehicle
         float liftThreshold = 70f;
 
         // Getting input values
-        moveAmt = inputActions.Plane.Move.ReadValue<Vector2>();
-        thrustAmt = inputActions.Plane.Thrust.ReadValue<float>();
+        moveAmt = InputObject.inputActions.Plane.Move.ReadValue<Vector2>();
+        thrustAmt = InputObject.inputActions.Plane.Thrust.ReadValue<float>();
 
         // Calculating forward speed
         float speed = vehicleData.maxSpeed * thrust;
@@ -94,24 +91,14 @@ public class Plane : Vehicle
         }
     }
 
-    public override void DisableInput()
-    {
-        inputActions.Plane.Disable();
-    }
-
-    public override void EnableInput()
-    {
-        inputActions.Plane.Enable();
-    }
-
     void Update()
     {
-        if (inputActions.Plane.EngineToggle.WasPressedThisFrame())
+        if (InputObject.inputActions.Plane.EngineToggle.WasPressedThisFrame())
         {
             ToggleEngine();
         }
 
-        if (inputActions.Plane.GearToggle.WasPressedThisFrame() && liftOff)
+        if (InputObject.inputActions.Plane.GearToggle.WasPressedThisFrame() && liftOff)
         {
             ToggleGear();
         }

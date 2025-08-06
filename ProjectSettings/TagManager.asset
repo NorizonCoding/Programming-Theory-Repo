@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Killzone
+  - Water
+  - InputActions
   layers:
   - Default
   - TransparentFX
