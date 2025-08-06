@@ -39,10 +39,10 @@ public class HUDManager : MonoBehaviour
         heliCamera.SetActive(false);
 
         vehicle = car;
-        vehicle.EnableInput();
-        boat.DisableInput();
-        plane.DisableInput();
-        heli.DisableInput();
+        InputObject.inputActions.Car.Enable();
+        InputObject.inputActions.Boat.Disable();
+        InputObject.inputActions.Plane.Disable();
+        InputObject.inputActions.Heli.Disable();
     }
 
     public void BoatButton()
@@ -53,10 +53,10 @@ public class HUDManager : MonoBehaviour
         heliCamera.SetActive(false);
 
         vehicle = boat;
-        vehicle.EnableInput();
-        plane.DisableInput();
-        heli.EnableInput();
-        car.DisableInput();
+        InputObject.inputActions.Car.Disable();
+        InputObject.inputActions.Boat.Enable();
+        InputObject.inputActions.Plane.Disable();
+        InputObject.inputActions.Heli.Disable();
     }
 
     public void PlaneButton()
@@ -67,10 +67,10 @@ public class HUDManager : MonoBehaviour
         heliCamera.SetActive(false);
 
         vehicle = plane;
-        vehicle.EnableInput();
-        heli.DisableInput();
-        boat.DisableInput();
-        car.DisableInput();
+        InputObject.inputActions.Car.Disable();
+        InputObject.inputActions.Boat.Disable();
+        InputObject.inputActions.Plane.Enable();
+        InputObject.inputActions.Heli.Disable();
     }
 
     public void HeliButton()
@@ -81,9 +81,9 @@ public class HUDManager : MonoBehaviour
         heliCamera.SetActive(true);
 
         vehicle = heli;
-        vehicle.EnableInput();
-        plane.DisableInput();
-        boat.DisableInput();
-        car.DisableInput();
+        InputObject.inputActions.Car.Disable();
+        InputObject.inputActions.Boat.Disable();
+        InputObject.inputActions.Plane.Disable();
+        InputObject.inputActions.Heli.Enable();
     }
 }

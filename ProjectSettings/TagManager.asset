@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Killzone
   - Water
+  - InputActions
   layers:
   - Default
   - TransparentFX

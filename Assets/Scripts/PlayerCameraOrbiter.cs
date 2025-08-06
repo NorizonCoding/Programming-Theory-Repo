@@ -33,12 +33,12 @@ public class PlayerCameraOrbiter : MonoBehaviour
 
     private void OnEnable()
     {
-        InputActions.FindActionMap("Plane").Enable();
+        InputActions.FindActionMap("Player").Enable();
     }
 
     private void OnDisable()
     {
-        InputActions.FindActionMap("Plane").Disable();
+        InputActions.FindActionMap("Player").Disable();
     }
 
     private void Start()
