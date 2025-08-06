@@ -1685,6 +1685,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Thrust"",
+                    ""type"": ""Value"",
+                    ""id"": ""513c724e-283e-4ac1-99f4-93c0e250f565"",
+                    ""expectedControlType"": ""Double"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -1775,6 +1784,72 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""589d4c50-1dfe-4012-9388-cd1e0be19509"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b22e2780-49fb-4135-a4d3-d1b9d97f968d"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""019a4182-3c5b-4909-abf1-9aa73535ec1c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""3e409f93-e6ec-4a86-bf60-7a27047d24b3"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""b3578950-352e-41a1-958e-aa1f714f5e25"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""4f9f86ae-74b3-45ee-a941-990b0e53209d"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Thrust"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -1885,6 +1960,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Heli = asset.FindActionMap("Heli", throwIfNotFound: true);
         m_Heli_Movement = m_Heli.FindAction("Movement", throwIfNotFound: true);
         m_Heli_EngineToggle = m_Heli.FindAction("Engine Toggle", throwIfNotFound: true);
+        m_Heli_Thrust = m_Heli.FindAction("Thrust", throwIfNotFound: true);
     }
 
     ~@InputSystem_Actions()
@@ -2716,6 +2792,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private List<IHeliActions> m_HeliActionsCallbackInterfaces = new List<IHeliActions>();
     private readonly InputAction m_Heli_Movement;
     private readonly InputAction m_Heli_EngineToggle;
+    private readonly InputAction m_Heli_Thrust;
     /// <summary>
     /// Provides access to input actions defined in input action map "Heli".
     /// </summary>
@@ -2735,6 +2812,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Heli/EngineToggle".
         /// </summary>
         public InputAction @EngineToggle => m_Wrapper.m_Heli_EngineToggle;
+        /// <summary>
+        /// Provides access to the underlying input action "Heli/Thrust".
+        /// </summary>
+        public InputAction @Thrust => m_Wrapper.m_Heli_Thrust;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -2767,6 +2848,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @EngineToggle.started += instance.OnEngineToggle;
             @EngineToggle.performed += instance.OnEngineToggle;
             @EngineToggle.canceled += instance.OnEngineToggle;
+            @Thrust.started += instance.OnThrust;
+            @Thrust.performed += instance.OnThrust;
+            @Thrust.canceled += instance.OnThrust;
         }
 
         /// <summary>
@@ -2784,6 +2868,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @EngineToggle.started -= instance.OnEngineToggle;
             @EngineToggle.performed -= instance.OnEngineToggle;
             @EngineToggle.canceled -= instance.OnEngineToggle;
+            @Thrust.started -= instance.OnThrust;
+            @Thrust.performed -= instance.OnThrust;
+            @Thrust.canceled -= instance.OnThrust;
         }
 
         /// <summary>
@@ -3146,5 +3233,12 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnEngineToggle(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Thrust" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnThrust(InputAction.CallbackContext context);
     }
 }

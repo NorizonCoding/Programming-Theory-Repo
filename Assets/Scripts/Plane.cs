@@ -1,6 +1,7 @@
 using UnityEngine;
 using Vehicles;
 
+// INHERITANCE
 public class Plane : Vehicle
 {
     [SerializeField] private float rollSpeed;
@@ -19,11 +20,7 @@ public class Plane : Vehicle
 
     private bool liftOff;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
-
+    // ABSTRACTION
     private void ChangeThrust()
     {
         if (engineEnabled && thrust < vehicleData.enginePower)
@@ -41,6 +38,7 @@ public class Plane : Vehicle
         }
     }
 
+    // POLYMORPHISM // ABSTRACTION
     protected override void Move()
     {
         float liftThreshold = 70f;
@@ -71,6 +69,8 @@ public class Plane : Vehicle
 
 
     }
+
+    // POLYMORPHISM
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -82,6 +82,7 @@ public class Plane : Vehicle
         }
     }
 
+    // ABSTRACTION
     private void SpinPropellers()
     {
         float ROTATION_SPEED = 720f;
@@ -91,6 +92,7 @@ public class Plane : Vehicle
         }
     }
 
+    // POLYMORPHISM
     void Update()
     {
         if (InputObject.inputActions.Plane.EngineToggle.WasPressedThisFrame())
@@ -104,6 +106,7 @@ public class Plane : Vehicle
         }
     }
 
+    // ABSTRACTION
     void ToggleGear()
     {
         foreach (GameObject wheel in wheels)

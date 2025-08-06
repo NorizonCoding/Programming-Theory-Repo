@@ -2102,7 +2102,7 @@ MonoBehaviour:
   vehicleData: {fileID: 11400000, guid: c270a16b60262b14992ffa8a9f235c44, type: 2}
   topPropeller: {fileID: 1246466616}
   rearPropeller: {fileID: 1927961300}
-  propellerRotationSpeed: 90
+  propellerRotationSpeed: 1800
 --- !u!54 &1582800088
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2820,9 +2820,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   engineEnabled: 0
   vehicleData: {fileID: 11400000, guid: f11459883e42c6c43bb9ffd82f34bef6, type: 2}
-  speed: 0
-  rotationSpeed: 0
-  onWater: 0
+  speed: 45
+  rotationSpeed: 90
 --- !u!54 &1972190604
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2832,8 +2831,8 @@ Rigidbody:
   m_GameObject: {fileID: 1972190598}
   serializedVersion: 5
   m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
+  m_LinearDamping: 0.4
+  m_AngularDamping: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -2848,7 +2847,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!1 &1996650674
 GameObject:

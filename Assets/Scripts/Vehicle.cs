@@ -4,12 +4,17 @@ using UnityEngine.InputSystem;
 namespace Vehicles
 {
     [RequireComponent (typeof(Rigidbody))]
+    // INHERITANCE
     public abstract class Vehicle : MonoBehaviour
     {
         protected float curSpeed;
+        
+        // ENCAPSULATION
         public float Speed { get { return curSpeed; } }
 
         [SerializeField] protected bool engineEnabled;
+
+        // ENCAPSULATION
         public bool EngineStatus { get { return engineEnabled; } }
 
         protected Vector3 prevPosition;
@@ -22,7 +27,6 @@ namespace Vehicles
 
         protected new Rigidbody rigidbody;
 
-        // Start is called once before the first frame Update
         protected virtual void Awake()
         {
             spawnPosition = transform.position;
@@ -37,23 +41,26 @@ namespace Vehicles
             prevPosition = transform.position;
         }
 
-        // Called at the start of every fixed update
+        // ABSTRACTION
         private void CalculateSpeed()
         {
             curSpeed = (transform.position - prevPosition).magnitude/Time.fixedDeltaTime;
             prevPosition = transform.position;
         }
 
+        // POLYMORPHISM
         protected virtual void FixedUpdate()
         {
             CalculateSpeed();
         }
 
+        // ABSTRACTION
         virtual protected void ToggleEngine()
         {
             engineEnabled = !engineEnabled;
         }
 
+        // POLYMORPHISM // ABSTRACTION
         protected abstract void Move();
 
         private void OnTriggerEnter(Collider other)
@@ -62,9 +69,7 @@ namespace Vehicles
             {
                 rigidbody.angularVelocity = Vector3.zero;
                 rigidbody.linearVelocity = Vector3.zero;
-                transform.position = spawnPosition;
-                transform.rotation = spawnRotation;
-
+                transform.SetPositionAndRotation(spawnPosition, spawnRotation);
             }
         }
     }
