@@ -1,6 +1,7 @@
 using UnityEngine;
 using Vehicles;
 
+// INHERITANCE
 public class Car : Vehicle
 {
     [Header("Car Properties")]
@@ -15,6 +16,7 @@ public class Car : Vehicle
     private Rigidbody rigidBody;
 
     // Start is called before the first frame update
+    // POLYMORPHISM
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -29,6 +31,7 @@ public class Car : Vehicle
     }
 
     // FixedUpdate is called at a fixed time interval
+    // POLYMORPHISM
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -36,11 +39,13 @@ public class Car : Vehicle
         if (engineEnabled) Move();
     }
 
+    // POLYMORPHISM
     private void Update()
     {
         if (InputObject.inputActions.Car.EngineToggle.WasPressedThisFrame()) ToggleEngine();
     }
 
+    // POLYMORPHISM // ABSTRACTION
     protected override void Move()
     {
         // Read the Vector2 input from the new Input System

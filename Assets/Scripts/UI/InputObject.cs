@@ -8,7 +8,5 @@ public class InputObject : MonoBehaviour
     {
         inputActions = new();
         inputActions.Enable();
-        inputActions.Player.Enable();
-        inputActions.Car.Enable();
     }
 }

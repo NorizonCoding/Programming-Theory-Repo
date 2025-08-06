@@ -1,22 +1,25 @@
 using UnityEngine;
 using Vehicles;
 
+// INHERITANCE
 public class Boat : Vehicle
 {
     [SerializeField] float speed;
     [SerializeField] float rotationSpeed;
 
-    // Update is called once per frame
+    // POLYMORPHISM
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
 
         if (engineEnabled)
         {
+            // ABSTRACTION
             Move();
         }
     }
 
+    // POLYMORPHISM
     private void Update()
     {
         if (InputObject.inputActions.Boat.EngineToggle.WasPressedThisFrame())
@@ -25,6 +28,7 @@ public class Boat : Vehicle
         }
     }
 
+    // POLYMORPHISM // ABSTRACTION
     protected override void Move()
     {
         Vector2 inputVector = InputObject.inputActions.Boat.Movement.ReadValue<Vector2>();
